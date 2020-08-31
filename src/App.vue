@@ -1,20 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div id="app">
+  <h1>{{contadorSeg < 10 ? '0'+contadorSeg : contadorSeg }} Segundos</h1>
+  <div class="botones">
+    <button @click="iniciar(5)">5 segundos</button>
+    <button @click="iniciar(10)">10 segundos</button>
+    <button @click="iniciar(30)">30 segundos</button>
+    <button @click="iniciar(60)">60 segundos</button>
   </div>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "contador",
+
+  data() {
+    return {
+      contadorSeg: 0,
+      myIntervalo: null,
+    };
+  },
+
+  methods: {
+    iniciar(time) {
+      this.contadorSeg = time;
+      clearInterval(this.myIntervalo);
+      this.myIntervalo = setInterval(() => {
+        this.contadorSeg > 0 ? this.contadorSeg-- : clearInterval(this.myIntervalo);
+        
+      }, 1000);
+      
+    },
+  },
+};
 </script>
+
 
 <style lang="scss">
 #app {
@@ -24,5 +44,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
+  
 }
 </style>
